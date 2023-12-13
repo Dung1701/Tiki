@@ -3,7 +3,7 @@ import { errorService, tokenService } from '@/services';
 import * as express from 'express';
 import { Request, Response } from '@/routers/base';
 export class AuthMiddleware extends BaseMiddleware {
-  async use(req: Request, res: Response, next: express.NextFunction) {
+  static async use(req: Request, res: Response, next: express.NextFunction) {
     let token = req.header('authorization');
     if (token && token.startsWith('Bearer ')) {
       token = token.slice(7);
@@ -12,7 +12,6 @@ export class AuthMiddleware extends BaseMiddleware {
     try {
       // Kiểm tra xem token có tồn tại hay không
       if (!token) {
-        console.log('Chưa có Token');
         next(errorService.auth.tokenMissing());
       }
 

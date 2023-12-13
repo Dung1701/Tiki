@@ -7,5 +7,4 @@ export default class ProductRouter extends CrudRouter<typeof productController> 
   constructor() {
     super(productController);
   }
-  customRouting() {}
 }

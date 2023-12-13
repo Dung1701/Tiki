@@ -7,5 +7,4 @@ export default class CategorisRouter extends CrudRouter<typeof categorisControll
   constructor() {
     super(categorisController);
   }
-  customRouting() {}
 }

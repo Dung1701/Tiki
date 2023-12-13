@@ -7,5 +7,4 @@ export default class PaymentRouter extends CrudRouter<typeof paymentController> 
   constructor() {
     super(paymentController);
   }
-  customRouting() {}
 }

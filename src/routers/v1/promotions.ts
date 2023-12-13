@@ -7,5 +7,4 @@ export default class PromotionRouter extends CrudRouter<typeof promotionControll
   constructor() {
     super(promotionController);
   }
-  customRouting() {}
 }

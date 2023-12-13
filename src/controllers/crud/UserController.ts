@@ -1,17 +1,21 @@
-import { errorService, userService } from '@/services';
+import * as express from 'express';
+import { AuthMiddleware } from '@/middlewares/authMiddleware';
+import { errorService, tokenService, userService } from '@/services';
 import { CrudController } from '@/controllers';
 import { Users } from '@/models';
-import { tokenService } from '@/services';
+import { Request, Response } from '@/routers/base';
+import { hashPassword } from '@/services/utils';
+
+const router = express.Router();
 
 export class UserController extends CrudController<typeof userService> {
   constructor() {
     super(userService);
   }
-
   // Tùy chỉnh hàm đăng nhập
   async login(body: { username: string; password: string }) {
     const { username, password } = body;
-    console.log(body);
+
     if (!username || !password) {
       throw errorService.database.customError('Login fail', 404);
     }
@@ -25,9 +29,26 @@ export class UserController extends CrudController<typeof userService> {
         exp: 0,
       });
       user.dataValues.token = token;
-      console.log('aaaa', user, password);
+      console.log('Generated token:', token);
     }
 
     return user;
   }
+
+  // TODO: define function register, logic:
+  async register(body: { username: string; password: string }) {
+    const { username, password } = body;
+
+    // Kiểm tra xem tên đăng nhập đã tồn tại hay chưa
+    const existingUser: any = await Users.findOne({ where: { username } });
+    if (existingUser) {
+      throw errorService.database.customError('Username already exists', 404);
+    }
+    // Mã hóa mật khẩu trước khi lưu vào cơ sở dữ liệu
+    const hashedPassword = await hashPassword(password);
+    // Tạo mới người dùng
+    return await Users.create({ username, password: hashedPassword });
+    // const newUser = await Users.create({ username, password: hashedPassword });
+  }
 }
+export default router;

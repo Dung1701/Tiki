@@ -7,5 +7,4 @@ export default class OrderRouter extends CrudRouter<typeof orderController> {
   constructor() {
     super(orderController);
   }
-  customRouting() {}
 }

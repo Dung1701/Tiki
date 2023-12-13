@@ -8,14 +8,21 @@ export default class AuthRouter extends BaseRouter {
   constructor() {
     super();
     this.router = express.Router();
-  }
-
-  customRouting() {
     this.router.post('/login', this.route(this.login));
+
+    // TODO define router like login
+    this.router.post('/register', this.route(this.register));
   }
 
+  // TODO: define function register
   async login(req: Request, res: Response) {
     const result = await userController.login(req.body);
+
+    this.onSuccess(res, result);
+  }
+  async register(req: Request, res: Response) {
+    console.log(req.body);
+    const result = await userController.register(req.body);
 
     this.onSuccess(res, result);
   }

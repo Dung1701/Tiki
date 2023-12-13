@@ -7,5 +7,4 @@ export default class ReviewRouter extends CrudRouter<typeof reviewController> {
   constructor() {
     super(reviewController);
   }
-  customRouting() {}
 }
