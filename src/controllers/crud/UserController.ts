@@ -37,6 +37,7 @@ export class UserController extends CrudController<typeof userService> {
 
   // TODO: define function register, logic:
   async register(body: { username: string; password: string }) {
+    console.log(body);
     const { username, password } = body;
 
     // Kiểm tra xem tên đăng nhập đã tồn tại hay chưa
@@ -48,7 +49,6 @@ export class UserController extends CrudController<typeof userService> {
     const hashedPassword = await hashPassword(password);
     // Tạo mới người dùng
     return await Users.create({ username, password: hashedPassword });
-    // const newUser = await Users.create({ username, password: hashedPassword });
   }
 }
 export default router;

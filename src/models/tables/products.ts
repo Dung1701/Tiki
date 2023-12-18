@@ -35,6 +35,12 @@ export const products = sequelize.define(
     stock_quantity: {
       type: DataTypes.STRING,
     },
+    percent_discount: {
+      type: DataTypes.STRING,
+    },
+    image: {
+      type: DataTypes.STRING,
+    },
     created_at: {
       type: 'TIMESTAMP',
       defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
