@@ -4,7 +4,7 @@ import { errorService, tokenService, userService } from '@/services';
 import { CrudController } from '@/controllers';
 import { Users } from '@/models';
 import { Request, Response } from '@/routers/base';
-import { hashPassword } from '@/services/utils';
+import { hashPassword, comparePassword } from '@/services/utils';
 
 const router = express.Router();
 
@@ -15,15 +15,22 @@ export class UserController extends CrudController<typeof userService> {
   // Tùy chỉnh hàm đăng nhập
   async login(body: { username: string; password: string }) {
     const { username, password } = body;
+    // const hashedPassword = await hashPassword(password);
 
+    console.log('hashedPassword', password);
     if (!username || !password) {
       throw errorService.database.customError('Login fail', 404);
     }
-
-    const user: any = await Users.findOne({ where: { password, username } });
+    const user: any = await Users.findOne({ where: { username } });
+    console.log(user);
     if (!user) {
       throw errorService.database.customError('User not found', 404);
     } else {
+      const isPasswordMatch = await comparePassword(password, user.password);
+
+      if (!isPasswordMatch) {
+        throw errorService.database.customError('Incorrect password', 404);
+      }
       const token = tokenService.generateToken({
         userId: user.id,
         exp: 0,

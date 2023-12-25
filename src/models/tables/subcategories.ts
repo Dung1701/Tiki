@@ -1,32 +1,25 @@
 import { DataTypes } from 'sequelize';
 import { sequelize, Sequelize } from '../base';
 
-export const Users = sequelize.define(
-  'tbl_user',
+export const subcategories = sequelize.define(
+  'tbl_subcategories',
   {
     id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV1,
       primaryKey: true,
     },
-    username: {
+    name: {
       type: DataTypes.STRING,
     },
-    password: {
-      type: DataTypes.STRING,
+    categorisid: {
+      type: DataTypes.UUID,
+      references: {
+        model: 'tbl_categoris',
+        key: 'id',
+      },
     },
-    email: {
-      type: DataTypes.STRING,
-    },
-    fullname: {
-      type: DataTypes.STRING,
-    },
-    chassis: {
-      type: DataTypes.STRING,
-    },
-    phone_number: {
-      type: DataTypes.STRING,
-    },
+
     created_at: {
       type: 'TIMESTAMP',
       defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),

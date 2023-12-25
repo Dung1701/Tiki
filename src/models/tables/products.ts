@@ -23,6 +23,13 @@ export const products = sequelize.define(
         key: 'id',
       },
     },
+    subcategoriesid: {
+      type: DataTypes.UUID,
+      references: {
+        model: 'tbl_subcategories',
+        key: 'id',
+      },
+    },
     name: {
       type: DataTypes.STRING,
     },

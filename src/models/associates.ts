@@ -1,4 +1,5 @@
 import { Users, Orders, categoris, deliveryreview, orderdetail, paymentreviews, payments, products, promotions } from '@/models/tables';
+import { subcategories } from './tables/subcategories';
 
 //User - Order
 Users.hasMany(Orders, { foreignKey: 'userid', as: 'orders' });
@@ -25,8 +26,11 @@ deliveryreview.belongsTo(Users, { foreignKey: 'userid', as: 'user' });
 products.hasMany(paymentreviews, { foreignKey: 'productid', as: 'paymentReviews' });
 paymentreviews.belongsTo(products, { foreignKey: 'productid', as: 'product' });
 //categoris-products
-categoris.hasMany(products, { foreignKey: 'categorisid', as: 'products' });
-products.belongsTo(categoris, { foreignKey: 'categorisid', as: 'category' });
+categoris.hasMany(subcategories, { foreignKey: 'categorisid', as: 'subcategories' });
+subcategories.belongsTo(categoris, { foreignKey: 'categorisid', as: 'category' });
+//supcategoris-products
+subcategories.hasMany(products, { foreignKey: 'subcategoriesid', as: 'products' });
+products.belongsTo(subcategories, { foreignKey: 'subcategoriesid', as: 'subcategories' });
 //products-orderdetail
 products.hasMany(orderdetail, { foreignKey: 'productid', as: 'orderDetails' });
 orderdetail.belongsTo(products, { foreignKey: 'productid', as: 'product' });

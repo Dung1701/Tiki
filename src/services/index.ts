@@ -13,6 +13,7 @@ import { OrderService } from './crud/orderService';
 import { CategorisService } from './crud/categorisService';
 import { PromotionService } from './crud/promotionService';
 import { PaymentReviewService } from './crud/paymentreviewService';
+import { SubCategoriesService } from './crud/subcategoriesService';
 // SECTION
 
 const errorService = new ErrorService();
@@ -28,7 +29,7 @@ const categorisService = new CategorisService();
 const promotionService = new PromotionService();
 const paymentreviewServire = new PaymentReviewService();
 const tokenService = new TokenService();
-
+const subcategoriesService = new SubCategoriesService();
 // SECTION
 
 export {
@@ -45,4 +46,5 @@ export {
   promotionService,
   paymentreviewServire,
   tokenService,
+  subcategoriesService,
 };
