@@ -25,7 +25,10 @@ deliveryreview.belongsTo(Users, { foreignKey: 'userid', as: 'user' });
 //products-paymentReviews
 products.hasMany(paymentreviews, { foreignKey: 'productid', as: 'paymentReviews' });
 paymentreviews.belongsTo(products, { foreignKey: 'productid', as: 'product' });
-//categoris-products
+//categoris-product
+categoris.hasMany(products, { foreignKey: 'categorisid', as: 'products' });
+products.belongsTo(categoris, { foreignKey: 'categorisid', as: 'category' });
+//categoris-subcategories
 categoris.hasMany(subcategories, { foreignKey: 'categorisid', as: 'subcategories' });
 subcategories.belongsTo(categoris, { foreignKey: 'categorisid', as: 'category' });
 //supcategoris-products
