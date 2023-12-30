@@ -5,6 +5,7 @@ import { CrudController } from '@/controllers';
 import { Users } from '@/models';
 import { Request, Response } from '@/routers/base';
 import { hashPassword, comparePassword } from '@/services/utils';
+import bcrypt from 'bcrypt';
 
 const router = express.Router();
 
@@ -26,7 +27,9 @@ export class UserController extends CrudController<typeof userService> {
       throw errorService.database.customError('User not found', 404);
     } else {
       const isPasswordMatch = await comparePassword(password, user.password);
-
+      // Sử dụng hàm hashPassword để tạo hashedPassword từ password người dùng nhập vào
+      // const enteredHashedPassword = await hashPassword(password);
+      // const isPasswordMatch = await comparePassword(enteredHashedPassword, user.password);
       if (!isPasswordMatch) {
         throw errorService.database.customError('Incorrect password', 404);
       }
@@ -71,7 +74,7 @@ export class UserController extends CrudController<typeof userService> {
       let hashedPassword;
       if (useHashedPassword) {
         // Nếu sử dụng hashedPassword, mã hóa mật khẩu trước khi lưu vào cơ sở dữ liệu
-        hashedPassword = await hashPassword(password);
+        hashedPassword = bcrypt.hashSync(password, 10);
       } else {
         // Nếu không sử dụng hashedPassword, lưu mật khẩu trực tiếp
         hashedPassword = password;
