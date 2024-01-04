@@ -24,12 +24,21 @@ export const payments = sequelize.define(
         key: 'id',
       },
     },
-    promotionid: {
+    productid: {
       type: DataTypes.UUID,
       references: {
-        model: 'tbl_promotion',
+        model: 'tbl_product',
         key: 'id',
       },
+    },
+    name: {
+      type: DataTypes.STRING,
+    },
+    email: {
+      type: DataTypes.STRING,
+    },
+    address: {
+      type: DataTypes.STRING,
     },
     amount: {
       type: DataTypes.STRING,

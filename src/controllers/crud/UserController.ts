@@ -75,6 +75,7 @@ export class UserController extends CrudController<typeof userService> {
       if (useHashedPassword) {
         // Nếu sử dụng hashedPassword, mã hóa mật khẩu trước khi lưu vào cơ sở dữ liệu
         hashedPassword = bcrypt.hashSync(password, 10);
+        // hashedPassword = await hashPassword(password);
       } else {
         // Nếu không sử dụng hashedPassword, lưu mật khẩu trực tiếp
         hashedPassword = password;

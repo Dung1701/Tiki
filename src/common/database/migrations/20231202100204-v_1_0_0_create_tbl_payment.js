@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -9,7 +9,7 @@ module.exports = {
      * Example:
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
-    return await queryInterface.sequelize.transaction(async (transaction) => {
+    return await queryInterface.sequelize.transaction(async transaction => {
       await queryInterface.createTable(
         'tbl_payment',
         {
@@ -25,13 +25,34 @@ module.exports = {
               key: 'id',
             },
           },
-          
+          userid: {
+            type: Sequelize.DataTypes.UUID,
+            references: {
+              model: 'tbl_user',
+              key: 'id',
+            },
+          },
+          productid: {
+            type: Sequelize.DataTypes.UUID,
+            references: {
+              model: 'tbl_product',
+              key: 'id',
+            },
+          },
+          name: {
+            type: Sequelize.DataTypes.STRING,
+          },
+          email: {
+            type: Sequelize.DataTypes.STRING,
+          },
+          address: {
+            type: Sequelize.DataTypes.STRING,
+          },
           amount: {
             type: Sequelize.DataTypes.STRING,
           },
           payment_date: {
             type: Sequelize.DataTypes.DATE,
-          
           },
           payment_menthod: {
             type: Sequelize.DataTypes.STRING,
@@ -54,8 +75,8 @@ module.exports = {
         {
           transaction,
         },
-      )
-    })
+      );
+    });
   },
 
   async down(queryInterface, Sequelize) {
@@ -66,8 +87,9 @@ module.exports = {
      * await queryInterface.dropTable('users');
      */
 
-    return await queryInterface.sequelize.transaction(async (transaction) => {
-      await queryInterface.dropTable('tbl_payment', { transaction })
-    })
+    return await queryInterface.sequelize.transaction(async transaction => {
+      await queryInterface.dropTable('tbl_payment', { transaction });
+    });
   },
-}
+};
+
